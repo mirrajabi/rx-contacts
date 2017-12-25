@@ -56,6 +56,8 @@ public class MainActivity extends AppCompatActivity {
                 ContactAdapter adapter = getContactAdapter();
                 adapter.setContacts(contacts);
                 adapter.notifyDataSetChanged();
+            }, it -> {
+                //Handle exception
             });
     }
 }

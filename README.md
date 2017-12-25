@@ -12,7 +12,7 @@ repositories {
 Then add the dependency in modules build.gradle file
 ```gradle
 dependencies {
-    compile 'com.github.mirrajabi:rx-contacts2:1.0'
+    compile 'com.github.tougee:rx-contacts2:1.0'
 }
 ```
 
@@ -26,8 +26,10 @@ RxContacts.fetch(this)
           .subscribeOn(AndroidSchedulers.mainThread())
           .subscribe(contacts -> {
               // Do something...
+          }, it -> {
+              //Handle exception
           });
 ```
 
 ## Using RxJava 1.x?
-use the original library [https://github.com/UlrichRaab/rx-contacts](https://github.com/UlrichRaab/rx-contacts)
+use the original library [https://github.com/mirrajabi/rx-contacts2](https://github.com/mirrajabi/rx-contacts2)

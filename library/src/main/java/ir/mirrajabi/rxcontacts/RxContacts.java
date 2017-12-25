@@ -38,6 +38,7 @@ import static ir.mirrajabi.rxcontacts.ColumnMapper.mapThumbnail;
 
 /**
  * Android contacts as rx observable.
+ *
  * @author Ulrich Raab
  * @author MADNESS
  */
@@ -55,7 +56,7 @@ public class RxContacts {
 
     private ContentResolver mResolver;
 
-    public static Observable<Contact> fetch (@NonNull final Context context) {
+    public static Observable<Contact> fetch(@NonNull final Context context) {
         return Observable.create(new ObservableOnSubscribe<Contact>() {
             @Override
             public void subscribe(@io.reactivex.annotations.NonNull
@@ -70,9 +71,13 @@ public class RxContacts {
     }
 
 
-    private void fetch (ObservableEmitter emitter) {
+    private void fetch(ObservableEmitter emitter) {
         LongSparseArray<Contact> contacts = new LongSparseArray<>();
         Cursor cursor = createCursor();
+        if (cursor == null) {
+            emitter.onError(new IllegalArgumentException());
+            return;
+        }
         cursor.moveToFirst();
         int idColumnIndex = cursor.getColumnIndex(ContactsContract.Data.CONTACT_ID);
         int inVisibleGroupColumnIndex = cursor.getColumnIndex(ContactsContract.Data.IN_VISIBLE_GROUP);
@@ -114,7 +119,7 @@ public class RxContacts {
         emitter.onComplete();
     }
 
-    private Cursor createCursor () {
+    private Cursor createCursor() {
         return mResolver.query(
                 ContactsContract.Data.CONTENT_URI,
                 PROJECTION,
