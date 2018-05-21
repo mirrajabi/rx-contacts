@@ -14,7 +14,7 @@ import ir.mirrajabi.rxcontacts.RxContacts;
 
 /**
  * @author Ulrich Raab
- * @author MADNESS
+ * @author Mohammad Mirrajabi
  */
 public class MainActivity extends AppCompatActivity {
 
@@ -64,8 +64,8 @@ public class MainActivity extends AppCompatActivity {
                 .fetch(this)
                 .filter(m -> m.getInVisibleGroup() == 1)
                 .toSortedList(Contact::compareTo)
-                .observeOn(Schedulers.io())
-                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(contacts -> {
                     ContactAdapter adapter = getContactAdapter();
                     adapter.setContacts(contacts);

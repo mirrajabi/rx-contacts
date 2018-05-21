@@ -19,7 +19,7 @@ import ir.mirrajabi.rxcontacts.Contact;
 /**
  * TODO Write javadoc
  * @author Ulrich Raab
- * @author MADNESS
+ * @author Mohammad Mirrajabi
  */
 public class ContactView extends RelativeLayout {
 

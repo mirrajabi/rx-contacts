@@ -27,7 +27,7 @@ import java.util.Set;
  * Contact entity.
  *
  * @author Ulrich Raab
- * @author MADNESS
+ * @author Mohammad Mirrajabi
  */
 
 public class Contact implements Comparable<Contact> {

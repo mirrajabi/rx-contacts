@@ -14,7 +14,7 @@ import ir.mirrajabi.rxcontacts.Contact;
 /**
  * TODO Write javadoc
  * @author Ulrich Raab
- * @author MADNESS
+ * @author Mohammad Mirrajabi
  */
 public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHolder> {
 

@@ -41,7 +41,7 @@ import static ir.mirrajabi.rxcontacts.ColumnMapper.mapThumbnail;
  * Android contacts as rx observable.
  *
  * @author Ulrich Raab
- * @author MADNESS
+ * @author Mohammad Mirrajabi
  */
 public class RxContacts {
     private static final String[] PROJECTION = {

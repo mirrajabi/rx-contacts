@@ -23,7 +23,7 @@ import android.net.Uri;
 /**
  * TODO Write javadoc
  * @author Ulrich Raab
- * @author MADNESS
+ * @author Mohammad Mirrajabi
  */
 class ColumnMapper {
 
