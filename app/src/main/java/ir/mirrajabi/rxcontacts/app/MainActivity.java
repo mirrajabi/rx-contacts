@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import ir.mirrajabi.rxcontacts.Contact;
 import ir.mirrajabi.rxcontacts.RxContacts;
@@ -18,26 +19,39 @@ import ir.mirrajabi.rxcontacts.RxContacts;
 public class MainActivity extends AppCompatActivity {
 
     private ContactAdapter contactAdapter;
+    private CompositeDisposable compositeDisposable =
+            new CompositeDisposable();
 
     @Override
-    protected void onCreate (Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initializeRecyclerView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         requestContacts();
     }
 
-    private void initializeRecyclerView () {
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        compositeDisposable.dispose();
+    }
+
+    private void initializeRecyclerView() {
         ContactAdapter contactAdapter = getContactAdapter();
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        RecyclerView rv = (RecyclerView) findViewById(R.id.recyclerView_contacts);
+        RecyclerView rv = findViewById(R.id.recyclerView_contacts);
         if (rv != null) {
             rv.setAdapter(contactAdapter);
             rv.setLayoutManager(linearLayoutManager);
         }
     }
 
-    private ContactAdapter getContactAdapter () {
+    private ContactAdapter getContactAdapter() {
         if (contactAdapter != null) {
             return contactAdapter;
         }
@@ -45,19 +59,19 @@ public class MainActivity extends AppCompatActivity {
         return contactAdapter;
     }
 
-    private void requestContacts () {
-        RxContacts
-            .fetch(this)
-            .filter(m->m.getInVisibleGroup() == 1)
-            .toSortedList(Contact::compareTo)
-            .observeOn(Schedulers.io())
-            .subscribeOn(AndroidSchedulers.mainThread())
-            .subscribe(contacts -> {
-                ContactAdapter adapter = getContactAdapter();
-                adapter.setContacts(contacts);
-                adapter.notifyDataSetChanged();
-            }, it -> {
-                //Handle exception
-            });
+    private void requestContacts() {
+        compositeDisposable.add(RxContacts
+                .fetch(this)
+                .filter(m -> m.getInVisibleGroup() == 1)
+                .toSortedList(Contact::compareTo)
+                .observeOn(Schedulers.io())
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .subscribe(contacts -> {
+                    ContactAdapter adapter = getContactAdapter();
+                    adapter.setContacts(contacts);
+                    adapter.notifyDataSetChanged();
+                }, it -> {
+                    //Handle exception
+                }));
     }
 }

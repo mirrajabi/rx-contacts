@@ -17,6 +17,7 @@ package ir.mirrajabi.rxcontacts;
 
 
 import android.net.Uri;
+import android.support.annotation.NonNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -24,6 +25,7 @@ import java.util.Set;
 
 /**
  * Contact entity.
+ *
  * @author Ulrich Raab
  * @author MADNESS
  */
@@ -104,19 +106,21 @@ public class Contact implements Comparable<Contact> {
 
 
     @Override
-    public int compareTo(Contact other) {
-        if(mDisplayName != null && other.mDisplayName != null)
+    public int compareTo(@NonNull Contact other) {
+        if (mDisplayName != null && other.mDisplayName != null) {
             return mDisplayName.compareTo(other.mDisplayName);
-        else return -1;
+        }
+
+        return -1;
     }
 
     @Override
-    public int hashCode () {
+    public int hashCode() {
         return (int) (mId ^ (mId >>> 32));
     }
 
     @Override
-    public boolean equals (Object o) {
+    public boolean equals(Object o) {
         if (this == o) {
             return true;
         }
