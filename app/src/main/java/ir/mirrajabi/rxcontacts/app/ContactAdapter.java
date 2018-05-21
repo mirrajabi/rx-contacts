@@ -1,6 +1,7 @@
 package ir.mirrajabi.rxcontacts.app;
 
 
+import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.ViewGroup;
 
@@ -35,7 +36,7 @@ public class ContactAdapter extends RecyclerView.Adapter<ContactAdapter.ViewHold
    }
 
    @Override
-   public void onBindViewHolder (ViewHolder holder, int position) {
+   public void onBindViewHolder (@NonNull ViewHolder holder, int position) {
       // Get the contact at the given position
       Contact contact = getContact(position);
       // Get the view from the holder and bind the contact
