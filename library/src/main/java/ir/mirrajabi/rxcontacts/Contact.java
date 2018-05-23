@@ -18,6 +18,7 @@ package ir.mirrajabi.rxcontacts;
 
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -33,11 +34,16 @@ import java.util.Set;
 public class Contact implements Comparable<Contact> {
     private final long mId;
     private int mInVisibleGroup;
+    @Nullable
     private String mDisplayName;
     private boolean mStarred;
+    @Nullable
     private Uri mPhoto;
+    @Nullable
     private Uri mThumbnail;
+    @NonNull
     private Set<String> mEmails = new HashSet<>();
+    @NonNull
     private Set<String> mPhoneNumbers = new HashSet<>();
 
     Contact(long id) {
@@ -56,11 +62,12 @@ public class Contact implements Comparable<Contact> {
         mInVisibleGroup = inVisibleGroup;
     }
 
+    @Nullable
     public String getDisplayName() {
         return mDisplayName;
     }
 
-    public void setDisplayName(String displayName) {
+    public void setDisplayName(@Nullable String displayName) {
         mDisplayName = displayName;
     }
 
@@ -72,35 +79,40 @@ public class Contact implements Comparable<Contact> {
         mStarred = starred;
     }
 
+    @Nullable
     public Uri getPhoto() {
         return mPhoto;
     }
 
-    public void setPhoto(Uri photo) {
+    public void setPhoto(@Nullable Uri photo) {
         mPhoto = photo;
     }
 
+    @Nullable
     public Uri getThumbnail() {
         return mThumbnail;
     }
 
-    public void setThumbnail(Uri thumbnail) {
+
+    public void setThumbnail(@Nullable Uri thumbnail) {
         mThumbnail = thumbnail;
     }
 
+    @NonNull
     public Set<String> getEmails() {
         return mEmails;
     }
 
-    public void setEmails(Set<String> emails) {
+    public void setEmails(@NonNull Set<String> emails) {
         mEmails = emails;
     }
 
+    @NonNull
     public Set<String> getPhoneNumbers() {
         return mPhoneNumbers;
     }
 
-    public void setPhoneNumbers(Set<String> phoneNumbers) {
+    public void setPhoneNumbers(@NonNull Set<String> phoneNumbers) {
         mPhoneNumbers = phoneNumbers;
     }
 
