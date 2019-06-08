@@ -46,6 +46,9 @@ public class Contact implements Comparable<Contact> {
     @NonNull
     private Set<String> mPhoneNumbers = new HashSet<>();
 
+    @Nullable
+    private String accountType;
+
     Contact(long id) {
         this.mId = id;
     }
@@ -116,6 +119,14 @@ public class Contact implements Comparable<Contact> {
         mPhoneNumbers = phoneNumbers;
     }
 
+    public void setAccountType(@Nullable String accountType) {
+        this.accountType = accountType;
+    }
+
+    @Nullable
+    public String getAccountType() {
+        return accountType;
+    }
 
     @Override
     public int compareTo(@NonNull Contact other) {
