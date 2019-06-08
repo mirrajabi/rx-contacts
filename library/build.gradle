@@ -3,12 +3,11 @@ apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.mirrajabi'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion "27.0.3"
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 27
+        targetSdkVersion 28
         versionCode 1
         versionName "1.2.0"
 
@@ -23,6 +22,6 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "io.reactivex.rxjava2:rxjava:2.1.13"
-    implementation 'com.android.support:support-annotations:27.1.1'
+    implementation "io.reactivex.rxjava2:rxjava:2.2.6"
+    implementation 'com.android.support:support-annotations:28.0.0'
 }

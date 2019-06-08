@@ -28,6 +28,7 @@ import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 
+import static ir.mirrajabi.rxcontacts.ColumnMapper.mapAccountType;
 import static ir.mirrajabi.rxcontacts.ColumnMapper.mapDisplayName;
 import static ir.mirrajabi.rxcontacts.ColumnMapper.mapEmail;
 import static ir.mirrajabi.rxcontacts.ColumnMapper.mapInVisibleGroup;
@@ -52,7 +53,8 @@ public class RxContacts {
             ContactsContract.Data.PHOTO_THUMBNAIL_URI,
             ContactsContract.Data.DATA1,
             ContactsContract.Data.MIMETYPE,
-            ContactsContract.Data.IN_VISIBLE_GROUP
+            ContactsContract.Data.IN_VISIBLE_GROUP,
+            ContactsContract.RawContacts.ACCOUNT_TYPE
     };
 
     private ContentResolver mResolver;
@@ -74,18 +76,19 @@ public class RxContacts {
 
     private void fetch(ObservableEmitter<Contact> emitter) {
         HashMap<Long, Contact> contacts = new HashMap<>();
-        Cursor cursor = createCursor();
+        Cursor                 cursor   = createCursor();
         cursor.moveToFirst();
-        int idColumnIndex = cursor.getColumnIndex(ContactsContract.Data.CONTACT_ID);
-        int inVisibleGroupColumnIndex = cursor.getColumnIndex(ContactsContract.Data.IN_VISIBLE_GROUP);
+        int idColumnIndex                 = cursor.getColumnIndex(ContactsContract.Data.CONTACT_ID);
+        int inVisibleGroupColumnIndex     = cursor.getColumnIndex(ContactsContract.Data.IN_VISIBLE_GROUP);
         int displayNamePrimaryColumnIndex = cursor.getColumnIndex(ContactsContract.Data.DISPLAY_NAME_PRIMARY);
-        int starredColumnIndex = cursor.getColumnIndex(ContactsContract.Data.STARRED);
-        int photoColumnIndex = cursor.getColumnIndex(ContactsContract.Data.PHOTO_URI);
-        int thumbnailColumnIndex = cursor.getColumnIndex(ContactsContract.Data.PHOTO_THUMBNAIL_URI);
-        int mimetypeColumnIndex = cursor.getColumnIndex(ContactsContract.Data.MIMETYPE);
-        int dataColumnIndex = cursor.getColumnIndex(ContactsContract.Data.DATA1);
+        int starredColumnIndex            = cursor.getColumnIndex(ContactsContract.Data.STARRED);
+        int photoColumnIndex              = cursor.getColumnIndex(ContactsContract.Data.PHOTO_URI);
+        int thumbnailColumnIndex          = cursor.getColumnIndex(ContactsContract.Data.PHOTO_THUMBNAIL_URI);
+        int mimetypeColumnIndex           = cursor.getColumnIndex(ContactsContract.Data.MIMETYPE);
+        int dataColumnIndex               = cursor.getColumnIndex(ContactsContract.Data.DATA1);
+        int accountType               = cursor.getColumnIndex(ContactsContract.RawContacts.ACCOUNT_TYPE);
         while (!cursor.isAfterLast()) {
-            long id = cursor.getLong(idColumnIndex);
+            long    id      = cursor.getLong(idColumnIndex);
             Contact contact = contacts.get(id);
             if (contact == null) {
                 contact = new Contact(id);
@@ -93,6 +96,7 @@ public class RxContacts {
                 mapDisplayName(cursor, contact, displayNamePrimaryColumnIndex);
                 mapStarred(cursor, contact, starredColumnIndex);
                 mapPhoto(cursor, contact, photoColumnIndex);
+                mapAccountType(cursor, contact, accountType);
                 mapThumbnail(cursor, contact, thumbnailColumnIndex);
                 contacts.put(id, contact);
             }

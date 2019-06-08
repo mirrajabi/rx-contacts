@@ -63,6 +63,12 @@ class ColumnMapper {
             contact.setPhoto(Uri.parse(uri));
         }
     }
+    static void mapAccountType (Cursor cursor, Contact contact, int columnIndex) {
+        String uri = cursor.getString(columnIndex);
+        if (uri != null && !uri.isEmpty()) {
+            contact.setAccountType(uri);
+        }
+    }
 
     static void mapStarred (Cursor cursor, Contact contact, int columnIndex) {
         contact.setStarred(cursor.getInt(columnIndex) != 0);
